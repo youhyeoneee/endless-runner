@@ -15,41 +15,44 @@ public class CactusRespawnManager : MonoBehaviour
 {
     public List<StageObj> objPool = new List<StageObj>();
     public int objCnt = 5;
-    private DinoGameManager gm;
+    
+    #region instance
+    private DinoGameManager _gm;
     private void Awake()
     {
-        gm = DinoGameManager.instance;
+        _gm = DinoGameManager.instance;
 
-        if (gm == null)
+        if (_gm == null)
         {
-            gm = FindObjectOfType<DinoGameManager>();
+            _gm = FindObjectOfType<DinoGameManager>();
 
-            if (gm == null)
+            if (_gm == null)
             {
                 Debug.LogError("GameManager not found in scene.");
                 return;
             }
         }
 
-        for (int i = 0; i < gm.stages.Length; i++)
+        for (int i = 0; i < _gm.stages.Length; i++)
         {
             StageObj stage = new StageObj();
             
-            for (int j = 0; j < gm.stages[i].objs.Length; j++)
+            for (int j = 0; j < _gm.stages[i].objs.Length; j++)
             {
                 for (int q = 0; q < objCnt; q++)
                 {
-                    stage.objs.Add(CreateObj(gm.stages[i].objs[j], transform));
+                    stage.objs.Add(CreateObj(_gm.stages[i].objs[j], transform));
                 }
             }
             
             objPool.Add(stage);
         }
     }
+    #endregion
 
     private void Start()
     {
-        DinoGameManager.instance.onPlay += PlayGame;
+        _gm.onPlay += PlayGame;
 
     }
 
@@ -77,7 +80,7 @@ public class CactusRespawnManager : MonoBehaviour
     {
         while (DinoGameManager.instance.isPlay)
         {
-            objPool[gm.curStage].objs[SelectDeactivateObj(objPool[gm.curStage].objs)].SetActive(true);
+            objPool[_gm.curStage].objs[SelectDeactivateObj(objPool[_gm.curStage].objs)].SetActive(true);
             yield return new WaitForSeconds(Random.Range(1f, 3f));
         }
     }

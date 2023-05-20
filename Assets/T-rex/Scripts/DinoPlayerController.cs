@@ -12,6 +12,40 @@ public class DinoPlayerController : MonoBehaviour
     public float jumpSpeed = 0;
 
     private Vector2 startPosition;
+    
+    #region instance
+    private DinoGameManager _gm;
+    private SoundManager _sm;
+
+    private void Awake()
+    {
+        _gm = DinoGameManager.instance;
+        _sm = SoundManager.instance;
+        
+        if (_gm == null)
+        {
+            _gm = FindObjectOfType<DinoGameManager>();
+
+            if (_gm == null)
+            {
+                Debug.LogError("GameManager not found in scene.");
+                return;
+            }
+        }
+        
+        if (_sm == null)
+        {
+            _sm = FindObjectOfType<SoundManager>();
+
+            if (_sm == null)
+            {
+                Debug.LogError("SoundManager not found in scene.");
+                return;
+            }
+        }
+    }
+    #endregion
+
     void Start()
     {
         
@@ -20,7 +54,7 @@ public class DinoPlayerController : MonoBehaviour
     }
     void Update()
     {
-        if (DinoGameManager.instance.isPlay)
+        if (_gm.isPlay)
         {
             animator.SetBool("die", false);
             // 달리는 애니메이션으로 설정하기
@@ -32,11 +66,13 @@ public class DinoPlayerController : MonoBehaviour
         }
 
         // 점프 애니메이션으로 설정하기
-        if (Input.GetKeyDown(KeyCode.Space) && DinoGameManager.instance.isPlay)
+        if (Input.GetKeyDown(KeyCode.Space) && _gm.isPlay)
         {
             animator.SetBool("run", false);
             animator.SetBool("jump", true);
             isJump = true;
+            
+            SoundManager.instance.Jump();
         }
         else if (transform.position.y <= startPosition.y && isJump)
         {
@@ -76,8 +112,9 @@ public class DinoPlayerController : MonoBehaviour
     {
         if (col.CompareTag("Mob"))
         {
-            DinoGameManager.instance.GameOver();
+            _gm.GameOver();
             animator.SetBool("die", true);
+            _sm.Die();
         }
     }
 }
