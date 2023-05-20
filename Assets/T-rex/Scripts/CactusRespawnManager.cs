@@ -5,19 +5,45 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
+
+[System.Serializable]
+public class StageObj
+{
+    public List<GameObject> objs = new List<GameObject>();
+}
 public class CactusRespawnManager : MonoBehaviour
 {
-    public List<GameObject> cactusPool = new List<GameObject>();
-    public GameObject[] objs;
-    public int objCnt = 1;
+    public List<StageObj> objPool = new List<StageObj>();
+    public int objCnt = 5;
+    private DinoGameManager gm;
     private void Awake()
     {
-        for (int i = 0; i < objs.Length; i++)
+        gm = DinoGameManager.instance;
+
+        if (gm == null)
         {
-            for (int j = 0; j < objCnt; j++)
+            gm = FindObjectOfType<DinoGameManager>();
+
+            if (gm == null)
             {
-                cactusPool.Add(CreateObj(objs[i], transform));
+                Debug.LogError("GameManager not found in scene.");
+                return;
             }
+        }
+
+        for (int i = 0; i < gm.stages.Length; i++)
+        {
+            StageObj stage = new StageObj();
+            
+            for (int j = 0; j < gm.stages[i].objs.Length; j++)
+            {
+                for (int q = 0; q < objCnt; q++)
+                {
+                    stage.objs.Add(CreateObj(gm.stages[i].objs[j], transform));
+                }
+            }
+            
+            objPool.Add(stage);
         }
     }
 
@@ -31,13 +57,16 @@ public class CactusRespawnManager : MonoBehaviour
     {
         if (isPlay)
         {
-            // 시작 전 장애물 비화성화
-            for (int i = 0; i < cactusPool.Count; i++)
+            // 시작 전 장애물 비활성화
+            for (int i = 0; i < objPool.Count; i++)
             {
-                if (cactusPool[i].activeSelf)
-                        cactusPool[i].SetActive(false);
+                for (int j = 0; j < objPool[i].objs.Count; j++)
+                {
+                    if (objPool[i].objs[j].activeSelf)
+                        objPool[i].objs[j].SetActive(false);
+                }
+                
             }
-            
             StartCoroutine(CreateCactus());
         }
         else
@@ -48,18 +77,18 @@ public class CactusRespawnManager : MonoBehaviour
     {
         while (DinoGameManager.instance.isPlay)
         {
-            cactusPool[SelectDeactivateCactus()].SetActive(true);
+            objPool[gm.curStage].objs[SelectDeactivateObj(objPool[gm.curStage].objs)].SetActive(true);
             yield return new WaitForSeconds(Random.Range(1f, 3f));
         }
     }
 
-    int SelectDeactivateCactus()
+    int SelectDeactivateObj(List<GameObject> objs)
     {
         List<int> deactiveList = new List<int>();
-        for (int i = 0; i < cactusPool.Count; i++)
+        for (int i = 0; i < objs.Count; i++)
         {
             // 비활성화된 것을 추리기
-            if (!cactusPool[i].activeSelf)
+            if (!objs[i].activeSelf)
                 deactiveList.Add(i);
         }
 

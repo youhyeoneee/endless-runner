@@ -327,9 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8480ded725564c159e82d9d1e648bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cactusPool: []
-  objs:
-  - {fileID: 4273792362922533055, guid: 90ee377bb09cd4e1dae7f76c976365c9, type: 3}
+  objPool: []
   objCnt: 5
 --- !u!4 &237440357
 Transform:
@@ -1914,6 +1912,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSpeed: 4
   isPlay: 0
+  curStage: 0
+  stageScore: c8000000
+  stages:
+  - grounds:
+    - {fileID: 21300000, guid: 2e125205d23e84a7190927a7c312de63, type: 3}
+    - {fileID: 21300000, guid: 2bc8ded00166f449a9f050b8dda86bb3, type: 3}
+    - {fileID: 21300000, guid: 19c26e4b8428c44a5b352f5608b961c4, type: 3}
+    - {fileID: 21300000, guid: c8c890b2824a5482fa6283865daf97e8, type: 3}
+    objs:
+    - {fileID: 4273792362922533055, guid: 90ee377bb09cd4e1dae7f76c976365c9, type: 3}
+    - {fileID: 2819771398366378324, guid: e582f89c86a82477baa67d2e9132d1bf, type: 3}
+    - {fileID: 7745705827535368909, guid: 3bad33a5f4610416c80e793dea935460, type: 3}
+    - {fileID: 3256271642851764441, guid: 1be1adc724eab4aeeb79ad4564665a74, type: 3}
+  - grounds:
+    - {fileID: 21300000, guid: 2e125205d23e84a7190927a7c312de63, type: 3}
+    - {fileID: 21300000, guid: 2bc8ded00166f449a9f050b8dda86bb3, type: 3}
+    - {fileID: 21300000, guid: 19c26e4b8428c44a5b352f5608b961c4, type: 3}
+    - {fileID: 21300000, guid: c8c890b2824a5482fa6283865daf97e8, type: 3}
+    - {fileID: 21300000, guid: d10e01300f890480abc04635a43dd191, type: 3}
+    objs:
+    - {fileID: 4273792362922533055, guid: 90ee377bb09cd4e1dae7f76c976365c9, type: 3}
+    - {fileID: 2819771398366378324, guid: e582f89c86a82477baa67d2e9132d1bf, type: 3}
+    - {fileID: 7745705827535368909, guid: 3bad33a5f4610416c80e793dea935460, type: 3}
+    - {fileID: 3256271642851764441, guid: 1be1adc724eab4aeeb79ad4564665a74, type: 3}
+    - {fileID: 7054434470281860338, guid: c5154ca90896c4e72ba0293e86ce6bb5, type: 3}
+    - {fileID: 67322149105204199, guid: 1d7de517931e34615958063b5bc591c5, type: 3}
   startText: {fileID: 970639936}
   retryUI: {fileID: 1341012563}
   scoreUI: {fileID: 1385183328}

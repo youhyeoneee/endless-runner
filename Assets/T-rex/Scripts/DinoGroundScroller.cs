@@ -8,15 +8,17 @@ public class DinoGroundScroller : MonoBehaviour
     public Sprite[] groundImg;
 
     private SpriteRenderer temp;
-    
+    private DinoGameManager gm;
+
     void Start()
     {
+        gm = DinoGameManager.instance;
         temp = tiles[0];
     }
 
     void Update()
     {
-        if (DinoGameManager.instance.isPlay)
+        if (gm.isPlay)
         {
             for (int i = 0; i < tiles.Length; i++)
             {
@@ -29,7 +31,9 @@ public class DinoGroundScroller : MonoBehaviour
                     }
 
                     tiles[i].transform.position = new Vector2(temp.transform.position.x + 1, -0.3f);
-                    tiles[i].sprite = groundImg[Random.Range(0, groundImg.Length)];
+
+                    int idx = Random.Range(0, gm.stages[gm.curStage].grounds.Length);
+                    tiles[i].sprite = gm.stages[gm.curStage].grounds[idx];
                 }
             }
             for (int i = 0; i < tiles.Length; i++)

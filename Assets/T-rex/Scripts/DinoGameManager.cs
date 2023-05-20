@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Serializable]
+public class DinoStage
+{
+    public Sprite[] grounds;
+    public GameObject[] objs;
+}
+
 public class DinoGameManager : MonoBehaviour
 {
     
@@ -21,11 +28,14 @@ public class DinoGameManager : MonoBehaviour
     }
     #endregion
 
-    public float gameSpeed = 1;
+    public float gameSpeed = 4;
     public bool isPlay = false;
     public delegate void OnPlay(bool isPlay);
     public OnPlay onPlay;
-
+    public int curStage; // 현재 스테이지
+    public int[] stageScore; // 다음 스테이지로 넘어가기 위한 점수
+    public DinoStage[] stages;
+    
     [@SerializeField] private GameObject startText;
     [@SerializeField] private GameObject retryUI;
     [@SerializeField] private GameObject scoreUI;
@@ -62,6 +72,11 @@ public class DinoGameManager : MonoBehaviour
         if (!scoreUI.activeSelf)
             scoreUI.SetActive(true);
         
+        // 스테이지 초기화
+        curStage = 0;
+
+        // 속도 초기화
+        gameSpeed = 4;
         isPlay = true;
         onPlay.Invoke(isPlay);
 
@@ -90,9 +105,20 @@ public class DinoGameManager : MonoBehaviour
 
     IEnumerator AddScore()
     {
+        
         while (isPlay)
         {
+            try // 예외처리
+            {
+                // 각 스테이지에 필요한 점수를 도달했을 때
+                if (stageScore[curStage] <= score)
+                {                
+                    curStage++;
+                }
+            } catch { }
+
             score++;
+            gameSpeed += 0.01f; // 게임이 점점 빨라지게 
             scoreText.text = ConvertScore(score);
             yield return new WaitForSeconds(0.1f);
         }
