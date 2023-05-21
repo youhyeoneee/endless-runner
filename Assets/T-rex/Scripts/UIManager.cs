@@ -110,7 +110,7 @@ public class UIManager : MonoBehaviour
                     scoreText.text = scoreStr;
                 
                 // 밤 & 낮 
-                if (_score % 700 == 0) // 밤모드 
+                if (_score % 300 == 0) // 밤모드 
                 {
                     _scoreDay = _score + 200;
                     StartCoroutine(SetCameraBackGround(dayColor, nightColor));

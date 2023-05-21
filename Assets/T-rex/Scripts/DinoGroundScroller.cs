@@ -4,21 +4,38 @@ using UnityEngine;
 
 public class DinoGroundScroller : MonoBehaviour
 {
-    public SpriteRenderer[] tiles;
-    public Sprite[] groundImg;
+    [SerializeField] private SpriteRenderer[] tiles;
 
-    private SpriteRenderer temp;
-    private DinoGameManager gm;
+    private SpriteRenderer  _temp;
 
+    #region instance
+    private DinoGameManager _gm;
+
+    private void Awake()
+    {
+        _gm = DinoGameManager.instance;
+
+        if (_gm == null)
+        {
+            _gm = FindObjectOfType<DinoGameManager>();
+
+            if (_gm == null)
+            {
+                Debug.LogError("GameManager not found in scene.");
+                return;
+            }
+        }
+    }
+    #endregion
+    
     void Start()
     {
-        gm = DinoGameManager.instance;
-        temp = tiles[0];
+        _temp = tiles[0];
     }
 
     void Update()
     {
-        if (gm.isPlay)
+        if (_gm.isPlay)
         {
             for (int i = 0; i < tiles.Length; i++)
             {
@@ -26,14 +43,14 @@ public class DinoGroundScroller : MonoBehaviour
                 {
                     for (int q = 0; q < tiles.Length; q++)
                     {
-                        if (temp.transform.position.x < tiles[q].transform.position.x)
-                            temp = tiles[q];
+                        if (_temp.transform.position.x < tiles[q].transform.position.x)
+                            _temp = tiles[q];
                     }
 
-                    tiles[i].transform.position = new Vector2(temp.transform.position.x + 1, -0.3f);
+                    tiles[i].transform.position = new Vector2(_temp.transform.position.x + 1, -0.3f);
 
-                    int idx = Random.Range(0, gm.stages[gm.curStage].grounds.Length);
-                    tiles[i].sprite = gm.stages[gm.curStage].grounds[idx];
+                    int idx = Random.Range(0, _gm.stages[_gm.curStage].grounds.Length);
+                    tiles[i].sprite = _gm.stages[_gm.curStage].grounds[idx];
                 }
             }
             for (int i = 0; i < tiles.Length; i++)

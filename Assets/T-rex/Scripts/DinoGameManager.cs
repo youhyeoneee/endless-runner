@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class DinoStage
 {
-    public Sprite[] grounds;
+    public Sprite[]     grounds;
     public GameObject[] objs;
 }
 
@@ -39,13 +39,13 @@ public class DinoGameManager : MonoBehaviour
     }
     #endregion
 
-    public float gameSpeed = 4;
-    public bool isPlay = false;
+    public float         gameSpeed = 4;
+    public bool          isPlay    = false;
+    public int           curStage; // 현재 스테이지
+    public int[]         stageScore; // 다음 스테이지로 넘어가기 위한 점수
+    public DinoStage[]   stages;
     public delegate void OnPlay(bool isPlay);
     public OnPlay onPlay;
-    public int curStage; // 현재 스테이지
-    public int[] stageScore; // 다음 스테이지로 넘어가기 위한 점수
-    public DinoStage[] stages;
     
     private int _score = 0;
     
@@ -74,6 +74,7 @@ public class DinoGameManager : MonoBehaviour
         isPlay = false;
         onPlay.Invoke(isPlay);
         
+        _sm.Die();
         StopCoroutine(AddScore());
     }
 
@@ -109,6 +110,5 @@ public class DinoGameManager : MonoBehaviour
     {
         return _score;
     }
-
 
 }

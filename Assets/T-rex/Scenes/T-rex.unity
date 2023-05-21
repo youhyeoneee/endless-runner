@@ -409,10 +409,6 @@ MonoBehaviour:
   - {fileID: 92483473}
   - {fileID: 1597990427}
   - {fileID: 545225649}
-  groundImg:
-  - {fileID: 21300000, guid: 2e125205d23e84a7190927a7c312de63, type: 3}
-  - {fileID: 21300000, guid: 2bc8ded00166f449a9f050b8dda86bb3, type: 3}
-  - {fileID: 21300000, guid: 19c26e4b8428c44a5b352f5608b961c4, type: 3}
 --- !u!1 &376016845
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,8 +1135,8 @@ GameObject:
   - component: {fileID: 815480208}
   - component: {fileID: 815480210}
   - component: {fileID: 815480212}
-  - component: {fileID: 815480207}
   - component: {fileID: 815480211}
+  - component: {fileID: 815480207}
   m_Layer: 0
   m_Name: Dino
   m_TagString: Untagged

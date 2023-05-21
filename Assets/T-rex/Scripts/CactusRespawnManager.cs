@@ -2,19 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 
-[System.Serializable]
+[Serializable]
 public class StageObj
 {
     public List<GameObject> objs = new List<GameObject>();
 }
+
 public class CactusRespawnManager : MonoBehaviour
 {
-    public List<StageObj> objPool = new List<StageObj>();
-    public int objCnt = 5;
+    [SerializeField] private List<StageObj> objPool = new List<StageObj>();
+    [SerializeField] private int            objCnt  = 5;
     
     #region instance
     private DinoGameManager _gm;
@@ -53,7 +53,6 @@ public class CactusRespawnManager : MonoBehaviour
     private void Start()
     {
         _gm.onPlay += PlayGame;
-
     }
 
     void PlayGame(bool isPlay)
